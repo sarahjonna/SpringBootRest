@@ -4,11 +4,13 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "eve_customer_information")
 public class EveCustomerInformation {
+	@Id
 	@Column(name = "eve_customer_id")
 	private Integer eveCustomerId;
 	@Column(name = "eve_customer_name")
