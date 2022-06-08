@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.eve.salon.entity.EveCustomerInformation;
 
 @Repository
-public interface EveCustomerRepository extends JpaRepository<EveCustomerInformation,Integer>{
+public interface EveCustomerRepository extends JpaRepository<EveCustomerInformation, Integer>{
 
 }

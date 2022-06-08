@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class EveCustomerResponseDto {
+	
 	private Integer eveCustomerId;
 	private String eveCustomerName;
 	private Integer eveCustomerPhone;

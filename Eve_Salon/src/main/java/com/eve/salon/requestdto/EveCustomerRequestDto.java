@@ -1,6 +1,6 @@
 package com.eve.salon.requestdto;
 
-import java.time.LocalDate;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 public class EveCustomerRequestDto {
 	
 	private String eveCustomerName;
-	private Integer eveCustomerPhone;
-	private Integer eveCustomerAlternatePhone;
+	private Long eveCustomerPhone;
+	private Long eveCustomerAlternatePhone;
 	private String eveCustomerEmail;
 	private String eveCustomerGender;
 	private String eveCustomerGroup;
-	private LocalDate eveCustomerBirthday;
-	private LocalDate eveCustomerAnniversary;
+	private String eveCustomerBirthday;
+	private String eveCustomerAnniversary;
 	private String eveCustomerNotes;
 
 }
