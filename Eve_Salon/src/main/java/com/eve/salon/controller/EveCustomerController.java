@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eve.salon.entity.EveCustomerInformation;
+import com.eve.salon.entity.exceptions.CustomerAlreayExists;
 import com.eve.salon.requestdto.EveCustomerRequestDto;
 import com.eve.salon.responsedto.EveCustomerResponseDto;
 import com.eve.salon.service.EveCustomerService;
@@ -29,7 +30,7 @@ public class EveCustomerController {
 
 	@PostMapping("/addCustomer")
 	public ResponseEntity<EveCustomerResponseDto> addCustomer(
-			@RequestBody EveCustomerRequestDto eveCustomerRequestDto) {
+			@RequestBody EveCustomerRequestDto eveCustomerRequestDto) throws CustomerAlreayExists {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
 		EveCustomerInformation eveCustomerInformation = eveCustomerService.addCustomer(eveCustomerRequestDto);
 		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.eve.salon.entity.exceptions.CustomerAlreayExits;
+import com.eve.salon.entity.exceptions.CustomerAlreayExists;
 import com.eve.salon.entity.exceptions.CustomerNotFoundException;
 import com.eve.salon.entity.exceptions.ErrorMessage;
 
@@ -35,8 +35,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(messages, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(CustomerAlreayExits.class)
-	public ResponseEntity<ErrorMessage> handleCustomerAlreayExits(CustomerAlreayExits ex, WebRequest request) {
+	@ExceptionHandler(CustomerAlreayExists.class)
+	public ResponseEntity<ErrorMessage> handleCustomerAlreayExits(CustomerAlreayExists ex, WebRequest request) {
 		ErrorMessage message = new ErrorMessage(new Date(), "Customer Already exists", ex.getMessage(), null);
 
 		return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);

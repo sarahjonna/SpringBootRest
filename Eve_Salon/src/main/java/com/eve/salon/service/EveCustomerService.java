@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eve.salon.entity.EveCustomerInformation;
+import com.eve.salon.entity.exceptions.CustomerAlreayExists;
 import com.eve.salon.repository.EveCustomerRepository;
 import com.eve.salon.requestdto.EveCustomerRequestDto;
 import com.eve.salon.responsedto.EveCustomerResponseDto;
@@ -20,12 +21,18 @@ public class EveCustomerService {
 	@Autowired
 	EveCustomerRepository eveCustomerRepository;
 
-	public EveCustomerInformation addCustomer(EveCustomerRequestDto customerRequestDto) {
+	public EveCustomerInformation addCustomer(EveCustomerRequestDto customerRequestDto) throws CustomerAlreayExists {
 		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
+		
+		Optional<EveCustomerInformation> optcustomer = eveCustomerRepository.findByEveCustomerPhoneAndEveCustomerEmail(customerRequestDto.getEveCustomerPhone(),customerRequestDto.getEveCustomerEmail());
+		if(optcustomer.isPresent()) {
+			//eveCustomerInformation = optcustomer.get();
+			throw new CustomerAlreayExists("Customer Already Exists");
+		}
+		
 		BeanUtils.copyProperties(customerRequestDto, eveCustomerInformation);
 		eveCustomerInformation.setEveCustomerBirthday(LocalDate.parse(customerRequestDto.getEveCustomerBirthday()));
-		eveCustomerInformation
-				.setEveCustomerAnniversary(LocalDate.parse(customerRequestDto.getEveCustomerAnniversary()));
+		eveCustomerInformation.setEveCustomerAnniversary(LocalDate.parse(customerRequestDto.getEveCustomerAnniversary()));
 		eveCustomerInformation = eveCustomerRepository.save(eveCustomerInformation);
 		return eveCustomerInformation;
 
