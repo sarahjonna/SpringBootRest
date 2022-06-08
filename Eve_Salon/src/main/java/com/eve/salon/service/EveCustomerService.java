@@ -1,6 +1,7 @@
 package com.eve.salon.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.eve.salon.entity.EveCustomerInformation;
 import com.eve.salon.repository.EveCustomerRepository;
 import com.eve.salon.requestdto.EveCustomerRequestDto;
+import com.eve.salon.responsedto.EveCustomerResponseDto;
 
 @Service
 public class EveCustomerService {
@@ -30,23 +32,31 @@ public class EveCustomerService {
 	}
 
 	public EveCustomerInformation updateCustomer(Integer id, EveCustomerRequestDto evecustRequestDto) {
-		EveCustomerInformation evecustomer = new EveCustomerInformation();
+		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
 		Optional<EveCustomerInformation> optCustomer = eveCustomerRepository.findById(id);
 		if (optCustomer.isPresent()) {
-			evecustomer = optCustomer.get();
+			eveCustomerInformation = optCustomer.get();
 		}
-		BeanUtils.copyProperties(evecustRequestDto, evecustomer);
-		evecustomer.setEveCustomerBirthday(LocalDate.parse(evecustRequestDto.getEveCustomerBirthday()));
-		evecustomer.setEveCustomerAnniversary(LocalDate.parse(evecustRequestDto.getEveCustomerAnniversary()));
-		return evecustomer = eveCustomerRepository.save(evecustomer);
+		BeanUtils.copyProperties(evecustRequestDto, eveCustomerInformation);
+		eveCustomerInformation.setEveCustomerBirthday(LocalDate.parse(evecustRequestDto.getEveCustomerBirthday()));
+		eveCustomerInformation.setEveCustomerAnniversary(LocalDate.parse(evecustRequestDto.getEveCustomerAnniversary()));
+		return eveCustomerInformation = eveCustomerRepository.save(eveCustomerInformation);
 	}
 
-	public void deleteCustomerById(Integer id) {
-		eveCustomerRepository.deleteById(id);
+	public void deleteCustomerById(Integer eveCustomerId) {
+		eveCustomerRepository.deleteById(eveCustomerId);
 	}
-
-	public List<EveCustomerInformation> fetchCustomersList() {
-		return eveCustomerRepository.findAll();
+    
+	
+	public List<EveCustomerResponseDto> fetchCustomersList() {
+		List<EveCustomerResponseDto> eveCustomerResponseDtoList = new ArrayList<EveCustomerResponseDto>();
+		List<EveCustomerInformation> eveCustomerInformationList=eveCustomerRepository.findAll();
+		for(EveCustomerInformation eveCustInfo:eveCustomerInformationList) {
+			EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
+			BeanUtils.copyProperties( eveCustInfo,eveCustomerResponseDto);
+			eveCustomerResponseDtoList.add(eveCustomerResponseDto);
+		}
+		return eveCustomerResponseDtoList;
 	}
 
 }

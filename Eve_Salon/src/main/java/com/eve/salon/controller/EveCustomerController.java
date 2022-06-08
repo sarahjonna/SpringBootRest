@@ -37,21 +37,24 @@ public class EveCustomerController {
 	}
 
 	@PutMapping("/updateCustomer/{id}")
-	public EveCustomerInformation updateCustomer(@PathVariable Integer id,
+	public ResponseEntity<EveCustomerResponseDto> updateCustomer(@PathVariable Integer id,
 			@RequestBody EveCustomerRequestDto evecustRequestDto) {
-		return eveCustomerService.updateCustomer(id, evecustRequestDto);
+		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
+		EveCustomerInformation eveCustomerInformation= eveCustomerService.updateCustomer(id, evecustRequestDto);
+		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
+		return new ResponseEntity<EveCustomerResponseDto>(eveCustomerResponseDto, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteCustomer/{eveCustomerId}")
-	private String deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId) {
+	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId) {
 		eveCustomerService.deleteCustomerById(eveCustomerId);
-		return "DELETED CUSTOMER";
+		return new ResponseEntity<String>("Customer Deleted Successfully",HttpStatus.OK);
 	}
 
 	@GetMapping("/getAllCustomers")
-	public ResponseEntity<List<EveCustomerInformation>> getAllCustomers() {
-		List<EveCustomerInformation> eveCustomerInformation = eveCustomerService.fetchCustomersList();
-		return new ResponseEntity<List<EveCustomerInformation>>(eveCustomerInformation, HttpStatus.OK);
+	public ResponseEntity<List<EveCustomerResponseDto>> getAllCustomers() {
+		List<EveCustomerResponseDto> eveCustomerResponseDtoList = eveCustomerService.fetchCustomersList();
+		return new ResponseEntity<List<EveCustomerResponseDto>>(eveCustomerResponseDtoList, HttpStatus.OK);
 
 	}
 
