@@ -26,7 +26,7 @@ public class EveCustomerController {
 			@RequestBody EveCustomerRequestDto eveCustomerRequestDto) {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
 		EveCustomerInformation eveCustomerInformation = eveCustomerService.addCustomer(eveCustomerRequestDto);
-		BeanUtils.copyProperties(eveCustomerResponseDto, eveCustomerInformation);
+		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
 		return new ResponseEntity<EveCustomerResponseDto>(eveCustomerResponseDto, HttpStatus.OK);
 
 	}
