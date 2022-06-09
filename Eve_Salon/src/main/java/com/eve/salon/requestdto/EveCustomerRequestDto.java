@@ -22,9 +22,9 @@ public class EveCustomerRequestDto {
 	@NotNull(message = "Customername cannot be null")
 	@NotEmpty(message= "Customername cannot be empty")
 	private String eveCustomerName;
-	@Max(value=10,message="must be 10 digits")
+	@Pattern(regexp = "[0-9]{10}", message = "provide valid mobile no")
 	private Long eveCustomerPhone;
-	@Max(value=10 ,message="must be 10 digits")
+	@Pattern(regexp = "[0-9]{10}", message = "provide valid mobile no")
 	private Long eveCustomerAlternatePhone;
 	@Email
 	@NotEmpty(message= "CustomerEmail cannot be empty")
