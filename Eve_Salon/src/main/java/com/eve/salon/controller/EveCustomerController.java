@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eve.salon.entity.EveCustomerInformation;
 import com.eve.salon.entity.exceptions.CustomerAlreayExists;
+import com.eve.salon.entity.exceptions.CustomerNotFoundException;
 import com.eve.salon.requestdto.EveCustomerRequestDto;
 import com.eve.salon.responsedto.EveCustomerResponseDto;
 import com.eve.salon.service.EveCustomerService;
@@ -39,17 +40,17 @@ public class EveCustomerController {
 
 	@PutMapping("/updateCustomer/{id}")
 	public ResponseEntity<EveCustomerResponseDto> updateCustomer(@PathVariable Integer id,
-			@RequestBody EveCustomerRequestDto evecustRequestDto) {
-		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
-		EveCustomerInformation eveCustomerInformation= eveCustomerService.updateCustomer(id, evecustRequestDto);
-		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
-		return new ResponseEntity<EveCustomerResponseDto>(eveCustomerResponseDto, HttpStatus.OK);
+	@RequestBody EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException {
+	EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
+	EveCustomerInformation eveCustomerInformation= eveCustomerService.updateCustomer(id, evecustRequestDto);
+	BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
+	return new ResponseEntity<EveCustomerResponseDto>(eveCustomerResponseDto, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteCustomer/{eveCustomerId}")
-	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId) {
-		eveCustomerService.deleteCustomerById(eveCustomerId);
-		return new ResponseEntity<String>("Customer Deleted Successfully",HttpStatus.OK);
+	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId) throws CustomerNotFoundException {
+	eveCustomerService.deleteCustomerById(eveCustomerId);
+	return new ResponseEntity<String>("Customer Deleted Successfully",HttpStatus.OK);
 	}
 
 	@GetMapping("/getAllCustomers")

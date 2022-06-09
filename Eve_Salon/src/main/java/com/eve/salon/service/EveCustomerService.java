@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.eve.salon.entity.EveCustomerInformation;
 import com.eve.salon.entity.exceptions.CustomerAlreayExists;
+import com.eve.salon.entity.exceptions.CustomerNotFoundException;
 import com.eve.salon.repository.EveCustomerRepository;
 import com.eve.salon.requestdto.EveCustomerRequestDto;
 import com.eve.salon.responsedto.EveCustomerResponseDto;
@@ -26,7 +27,7 @@ public class EveCustomerService {
 		
 		Optional<EveCustomerInformation> optcustomer = eveCustomerRepository.findByEveCustomerPhoneAndEveCustomerEmail(customerRequestDto.getEveCustomerPhone(),customerRequestDto.getEveCustomerEmail());
 		if(optcustomer.isPresent()) {
-			//eveCustomerInformation = optcustomer.get();
+			//eveCustomerInformation = optcustomer.get()
 			throw new CustomerAlreayExists("Customer Already Exists");
 		}
 		
@@ -38,11 +39,14 @@ public class EveCustomerService {
 
 	}
 
-	public EveCustomerInformation updateCustomer(Integer id, EveCustomerRequestDto evecustRequestDto) {
+	public EveCustomerInformation updateCustomer(Integer id, EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException {
 		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
 		Optional<EveCustomerInformation> optCustomer = eveCustomerRepository.findById(id);
 		if (optCustomer.isPresent()) {
 			eveCustomerInformation = optCustomer.get();
+		}
+		else {
+			throw new CustomerNotFoundException("Customer not found");
 		}
 		BeanUtils.copyProperties(evecustRequestDto, eveCustomerInformation);
 		eveCustomerInformation.setEveCustomerBirthday(LocalDate.parse(evecustRequestDto.getEveCustomerBirthday()));
@@ -50,10 +54,17 @@ public class EveCustomerService {
 		return eveCustomerInformation = eveCustomerRepository.save(eveCustomerInformation);
 	}
 
-	public void deleteCustomerById(Integer eveCustomerId) {
+	public void deleteCustomerById(Integer eveCustomerId) throws CustomerNotFoundException {
+		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
+		Optional<EveCustomerInformation> optCustomerId = eveCustomerRepository.findById(eveCustomerId);
+		if (!optCustomerId.isPresent()) {
+
+		throw new CustomerNotFoundException("Customer doesnt exists");
+		} else {
 		eveCustomerRepository.deleteById(eveCustomerId);
-	}
-    
+		}
+		}
+	
 	
 	public List<EveCustomerResponseDto> fetchCustomersList() {
 		List<EveCustomerResponseDto> eveCustomerResponseDtoList = new ArrayList<EveCustomerResponseDto>();
