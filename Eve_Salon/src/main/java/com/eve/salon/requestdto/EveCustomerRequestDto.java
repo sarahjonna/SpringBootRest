@@ -7,13 +7,15 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,9 +24,11 @@ public class EveCustomerRequestDto {
 	@NotNull(message = "Customername cannot be null")
 	@NotEmpty(message= "Customername cannot be empty")
 	private String eveCustomerName;
-	@Pattern(regexp = "[0-9]{10}", message = "provide valid mobile no")
+	@Min(value = 10)
+	@Max(value = 10)
 	private Long eveCustomerPhone;
-	@Pattern(regexp = "[0-9]{10}", message = "provide valid mobile no")
+	@Min(value = 10)
+	@Max(value = 10)
 	private Long eveCustomerAlternatePhone;
 	@Email
 	@NotEmpty(message= "CustomerEmail cannot be empty")
