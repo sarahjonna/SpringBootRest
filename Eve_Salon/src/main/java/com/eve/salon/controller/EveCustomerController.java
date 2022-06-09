@@ -2,6 +2,8 @@ package com.eve.salon.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +33,7 @@ public class EveCustomerController {
 
 	@PostMapping("/addCustomer")
 	public ResponseEntity<EveCustomerResponseDto> addCustomer(
-			@RequestBody EveCustomerRequestDto eveCustomerRequestDto) throws CustomerAlreayExists {
+			@Valid @RequestBody EveCustomerRequestDto eveCustomerRequestDto) throws CustomerAlreayExists {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
 		EveCustomerInformation eveCustomerInformation = eveCustomerService.addCustomer(eveCustomerRequestDto);
 		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
@@ -40,17 +42,19 @@ public class EveCustomerController {
 
 	@PutMapping("/updateCustomer/{id}")
 	public ResponseEntity<EveCustomerResponseDto> updateCustomer(@PathVariable Integer id,
-	@RequestBody EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException {
-	EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
-	EveCustomerInformation eveCustomerInformation= eveCustomerService.updateCustomer(id, evecustRequestDto);
-	BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
-	return new ResponseEntity<EveCustomerResponseDto>(eveCustomerResponseDto, HttpStatus.OK);
+			@Valid @RequestBody EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException {
+		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
+		EveCustomerInformation eveCustomerInformation = eveCustomerService.updateCustomer(id, evecustRequestDto);
+		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
+		return new ResponseEntity<EveCustomerResponseDto>(eveCustomerResponseDto, HttpStatus.OK);
+
 	}
 
 	@DeleteMapping("/deleteCustomer/{eveCustomerId}")
-	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId) throws CustomerNotFoundException {
-	eveCustomerService.deleteCustomerById(eveCustomerId);
-	return new ResponseEntity<String>("Customer Deleted Successfully",HttpStatus.OK);
+	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId)
+			throws CustomerNotFoundException {
+		eveCustomerService.deleteCustomerById(eveCustomerId);
+		return new ResponseEntity<String>("Customer Deleted Successfully", HttpStatus.OK);
 	}
 
 	@GetMapping("/getAllCustomers")

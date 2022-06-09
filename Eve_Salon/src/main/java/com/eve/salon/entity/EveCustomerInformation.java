@@ -22,9 +22,9 @@ public class EveCustomerInformation {
 	@Column(name = "eve_customer_name")
 	private String eveCustomerName;
 	@Column(name = "eve_customer_phone")
-	private Long eveCustomerPhone;
+	private String eveCustomerPhone;
 	@Column(name = "eve_customer_alternate_phone")
-	private Long eveCustomerAlternatePhone;
+	private String eveCustomerAlternatePhone;
 	@Column(name = "eve_customer_email")
 	private String eveCustomerEmail;
 	@Column(name = "eve_customer_gender")
