@@ -13,8 +13,8 @@ public class EveCustomerResponseDto {
 	
 	private Integer eveCustomerId;
 	private String eveCustomerName;
-	private Long eveCustomerPhone;
-	private Long eveCustomerAlternatePhone;
+	private String eveCustomerPhone;
+	private String eveCustomerAlternatePhone;
 	private String eveCustomerEmail;
 	private String eveCustomerGender;
 	private String eveCustomerGroup;

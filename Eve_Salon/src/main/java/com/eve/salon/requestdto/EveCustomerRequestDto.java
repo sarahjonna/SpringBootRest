@@ -3,33 +3,31 @@ package com.eve.salon.requestdto;
 
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class EveCustomerRequestDto {
+	
 	@Size(min=3 , max = 50)
 	@NotNull(message = "Customername cannot be null")
 	@NotEmpty(message= "Customername cannot be empty")
 	private String eveCustomerName;
-	@Min(value = 10)
-	@Max(value = 10)
-	private Long eveCustomerPhone;
-	@Min(value = 10)
-	@Max(value = 10)
-	private Long eveCustomerAlternatePhone;
+	@NotNull(message = "provide mobile no ,only digits")
+	@Pattern(regexp = "[0-9]{10}", message = "provide valid mobile no")
+	private String eveCustomerPhone;
+	@NotNull(message = "provide mobile no ,only digits")
+	@Pattern(regexp = "[0-9]{10}", message = "provide valid mobile no")
+	private String eveCustomerAlternatePhone;
 	@Email
 	@NotEmpty(message= "CustomerEmail cannot be empty")
 	private String eveCustomerEmail;

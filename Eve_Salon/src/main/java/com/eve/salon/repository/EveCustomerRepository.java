@@ -9,6 +9,6 @@ import com.eve.salon.entity.EveCustomerInformation;
 
 @Repository
 public interface EveCustomerRepository extends JpaRepository<EveCustomerInformation, Integer> {
-	Optional<EveCustomerInformation> findByEveCustomerPhoneAndEveCustomerEmail(Long eveCustomerPhone,
+	Optional<EveCustomerInformation> findByEveCustomerPhoneAndEveCustomerEmail(String eveCustomerPhone,
 			String eveCustomerEmail);
 }
