@@ -2,6 +2,8 @@ package com.eve.salon.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class EveCustomerController {
 	EveCustomerService eveCustomerService;
 
 	@PostMapping("/addCustomer")
-	public ResponseEntity<EveCustomerResponseDto> addCustomer(
+	public ResponseEntity<EveCustomerResponseDto> addCustomer(@Valid
 			@RequestBody EveCustomerRequestDto eveCustomerRequestDto) throws CustomerAlreayExists {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
 		EveCustomerInformation eveCustomerInformation = eveCustomerService.addCustomer(eveCustomerRequestDto);
@@ -39,7 +41,7 @@ public class EveCustomerController {
 
 	@PutMapping("/updateCustomer/{id}")
 	public ResponseEntity<EveCustomerResponseDto> updateCustomer(@PathVariable Integer id,
-			@RequestBody EveCustomerRequestDto evecustRequestDto) {
+			@Valid @RequestBody EveCustomerRequestDto evecustRequestDto) {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
 		EveCustomerInformation eveCustomerInformation= eveCustomerService.updateCustomer(id, evecustRequestDto);
 		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);
