@@ -42,7 +42,7 @@ public class EveCustomerController {
 
 	@PutMapping("/updateCustomer/{id}")
 	public ResponseEntity<EveCustomerResponseDto> updateCustomer(@PathVariable Integer id,
-			@Valid @RequestBody EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException {
+			@Valid @RequestBody EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException, CustomerAlreayExists {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
 		EveCustomerInformation eveCustomerInformation = eveCustomerService.updateCustomer(id, evecustRequestDto);
 		BeanUtils.copyProperties(eveCustomerInformation, eveCustomerResponseDto);

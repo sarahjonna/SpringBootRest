@@ -25,7 +25,7 @@ public class EveCustomerService {
 	public EveCustomerInformation addCustomer(EveCustomerRequestDto customerRequestDto) throws CustomerAlreayExists {
 		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
 		
-		Optional<EveCustomerInformation> optcustomer = eveCustomerRepository.findByEveCustomerPhoneAndEveCustomerEmail(customerRequestDto.getEveCustomerPhone(),customerRequestDto.getEveCustomerEmail());
+		Optional<EveCustomerInformation> optcustomer = eveCustomerRepository.findByEveCustomerPhoneOrEveCustomerEmail(customerRequestDto.getEveCustomerPhone(),customerRequestDto.getEveCustomerEmail());
 		if(optcustomer.isPresent()) {
 			//eveCustomerInformation = optcustomer.get()
 			throw new CustomerAlreayExists("Customer Already Exists");
@@ -39,20 +39,26 @@ public class EveCustomerService {
 
 	}
 
-	public EveCustomerInformation updateCustomer(Integer id, EveCustomerRequestDto evecustRequestDto) throws CustomerNotFoundException {
-		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
-		Optional<EveCustomerInformation> optCustomer = eveCustomerRepository.findById(id);
-		if (optCustomer.isPresent()) {
-			eveCustomerInformation = optCustomer.get();
-		}
-		else {
-			throw new CustomerNotFoundException("Customer not found");
-		}
-		BeanUtils.copyProperties(evecustRequestDto, eveCustomerInformation);
-		eveCustomerInformation.setEveCustomerBirthday(LocalDate.parse(evecustRequestDto.getEveCustomerBirthday()));
-		eveCustomerInformation.setEveCustomerAnniversary(LocalDate.parse(evecustRequestDto.getEveCustomerAnniversary()));
-		return eveCustomerInformation = eveCustomerRepository.save(eveCustomerInformation);
-	}
+	public EveCustomerInformation updateCustomer(Integer id, EveCustomerRequestDto evecustRequestDto)
+            throws CustomerNotFoundException, CustomerAlreayExists {
+        EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
+        Optional<EveCustomerInformation> optCustomer = eveCustomerRepository.findById(id);
+        if (optCustomer.isPresent()) {
+            eveCustomerInformation = optCustomer.get();
+        } else {
+            throw new CustomerNotFoundException("Customer not found");
+        }
+        Optional<EveCustomerInformation> optcustomer = eveCustomerRepository.findByEveCustomerPhoneOrEveCustomerEmail(
+                evecustRequestDto.getEveCustomerPhone(), evecustRequestDto.getEveCustomerEmail());
+        if (optcustomer.isPresent()) {
+            throw new CustomerAlreayExists("Customer Already Exists");
+        }
+        BeanUtils.copyProperties(evecustRequestDto, eveCustomerInformation);
+        eveCustomerInformation.setEveCustomerBirthday(LocalDate.parse(evecustRequestDto.getEveCustomerBirthday()));
+        eveCustomerInformation
+                .setEveCustomerAnniversary(LocalDate.parse(evecustRequestDto.getEveCustomerAnniversary()));
+        return eveCustomerInformation = eveCustomerRepository.save(eveCustomerInformation);
+    }
 
 	public void deleteCustomerById(Integer eveCustomerId) throws CustomerNotFoundException {
 		EveCustomerInformation eveCustomerInformation = new EveCustomerInformation();
