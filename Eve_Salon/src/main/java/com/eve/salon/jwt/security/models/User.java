@@ -22,7 +22,7 @@ import lombok.Data;
 		@UniqueConstraint(columnNames = "email") })
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private String email;
