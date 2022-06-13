@@ -16,7 +16,7 @@ import lombok.Data;
 @Table(name = "eve_customer_information")
 public class EveCustomerInformation {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "eve_customer_id")
 	private Integer eveCustomerId;
 	@Column(name = "eve_customer_name")
