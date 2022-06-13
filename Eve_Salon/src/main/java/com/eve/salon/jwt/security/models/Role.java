@@ -1,7 +1,24 @@
 package com.eve.salon.jwt.security.models;
 
-public class Role {
-	private Long id;
-	private String name;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "roles")
+public class Role {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+    private ERole name;
+
+	public Role(ERole name) {
+		this.name = name;
+
+	}
 }
