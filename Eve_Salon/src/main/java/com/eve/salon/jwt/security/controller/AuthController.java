@@ -37,6 +37,7 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
+		
 		return (ResponseEntity<?>) ResponseEntity.ok();
 	}
 
@@ -78,6 +79,8 @@ public class AuthController {
 				}
 			});
 		}
+		user.setRoles(roles);
+	    userRepository.save(user);
 	
 		return ResponseEntity.ok(new MessageResponse("User Registered successfully"));
 	}
