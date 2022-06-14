@@ -25,7 +25,7 @@ import com.eve.salon.responsedto.EveCustomerResponseDto;
 import com.eve.salon.service.EveCustomerService;
 
 @RestController
-@RequestMapping("/eveCustomer")
+@RequestMapping("/api/eveCustomer")
 public class EveCustomerController {
 
 	@Autowired
