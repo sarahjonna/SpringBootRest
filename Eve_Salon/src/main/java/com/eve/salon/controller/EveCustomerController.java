@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class EveCustomerController {
 	EveCustomerService eveCustomerService;
 
 	@PostMapping("/addCustomer")
+	//@PreAuthorize("hasRole('admin')")
 	public ResponseEntity<EveCustomerResponseDto> addCustomer(
 			@Valid @RequestBody EveCustomerRequestDto eveCustomerRequestDto) throws CustomerAlreayExists {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
@@ -59,6 +61,7 @@ public class EveCustomerController {
 	}
 
 	@GetMapping("/getAllCustomers")
+	//@PreAuthorize("hasRole('admin') or hasRole('user')")
 	public ResponseEntity<List<EveCustomerResponseDto>> getAllCustomers() {
 		List<EveCustomerResponseDto> eveCustomerResponseDtoList = eveCustomerService.fetchCustomersList();
 		return new ResponseEntity<List<EveCustomerResponseDto>>(eveCustomerResponseDtoList, HttpStatus.OK);
