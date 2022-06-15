@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	UserDetailsServiceImpl userDetailsService;
 	
 	@Autowired
-	AuthEntryPointJwt authenticationEntryPoint;
+	private AuthEntryPointJwt authenticationEntryPoint;
 	
 	@Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
-	public void configure(HttpSecurity http) throws Exception {
+	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling()
 		.authenticationEntryPoint(authenticationEntryPoint).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

@@ -10,14 +10,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.eve.salon.jwt.security.models.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
 public class UserDetailsImpl implements UserDetails {
-
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String username;
 	private String email;
+	@JsonIgnore
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -101,8 +104,8 @@ public class UserDetailsImpl implements UserDetails {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserDetailsImpl other = (UserDetailsImpl) obj;
-		return Objects.equals(id, other.id);
+		UserDetailsImpl user = (UserDetailsImpl) obj;
+		return Objects.equals(id, user.id);
 	}
 
 }

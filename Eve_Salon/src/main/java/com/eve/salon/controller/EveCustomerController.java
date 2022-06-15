@@ -33,7 +33,7 @@ public class EveCustomerController {
 	EveCustomerService eveCustomerService;
 
 	@PostMapping("/addCustomer")
-	//@PreAuthorize("hasRole('admin')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EveCustomerResponseDto> addCustomer(
 			@Valid @RequestBody EveCustomerRequestDto eveCustomerRequestDto) throws CustomerAlreayExists {
 		EveCustomerResponseDto eveCustomerResponseDto = new EveCustomerResponseDto();
@@ -61,7 +61,7 @@ public class EveCustomerController {
 	}
 
 	@GetMapping("/getAllCustomers")
-	//@PreAuthorize("hasRole('admin') or hasRole('user')")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<List<EveCustomerResponseDto>> getAllCustomers() {
 		List<EveCustomerResponseDto> eveCustomerResponseDtoList = eveCustomerService.fetchCustomersList();
 		return new ResponseEntity<List<EveCustomerResponseDto>>(eveCustomerResponseDtoList, HttpStatus.OK);
