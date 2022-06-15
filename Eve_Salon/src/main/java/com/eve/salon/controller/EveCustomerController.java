@@ -43,6 +43,7 @@ public class EveCustomerController {
 	}
 
 	@PutMapping("/updateCustomer/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EveCustomerResponseDto> updateCustomer(@PathVariable Integer id,
 			@Valid @RequestBody EveCustomerRequestDto evecustRequestDto)
 			throws CustomerNotFoundException, CustomerAlreayExists {
@@ -54,6 +55,7 @@ public class EveCustomerController {
 	}
 
 	@DeleteMapping("/deleteCustomer/{eveCustomerId}")
+	@PreAuthorize("hasRole('ADMIN')")
 	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId)
 			throws CustomerNotFoundException {
 		eveCustomerService.deleteCustomerById(eveCustomerId);
