@@ -56,7 +56,7 @@ public class EveCustomerController {
 
 	@DeleteMapping("/deleteCustomer/{eveCustomerId}")
 	@PreAuthorize("hasRole('ADMIN')")
-	private ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") int eveCustomerId)
+	public ResponseEntity<String> deleteCustomerById(@PathVariable("eveCustomerId") Integer eveCustomerId)
 			throws CustomerNotFoundException {
 		eveCustomerService.deleteCustomerById(eveCustomerId);
 		return new ResponseEntity<String>("Customer Deleted Successfully", HttpStatus.OK);
